@@ -8,21 +8,15 @@ import random
 
 
 def choice1():
-    global player_choice
-    player_choice = "rock"
-    start_game()
+    start_game("rock")
 
 
 def choice2():
-    global player_choice
-    player_choice = "scissors"
-    start_game()
+    start_game("scissors")
 
 
 def choice3():
-    global player_choice
-    player_choice = "paper"
-    start_game()
+    start_game("paper")
 
 
 def exit_game():
@@ -33,7 +27,7 @@ def repeat_game():
     gameWindow.destroy()
 
 
-def end_game():
+def end_game(winner, player_choice, pc_choice):
     global gameWindow
 
     gameWindow = Toplevel(window)
@@ -50,18 +44,17 @@ def end_game():
     end_label = Label(gameWindow)
     if winner == "Draw":
         end_label.config(font=("Arial", 15),
-                         text="It's draw, because computer chose " + pc_choice +
-                              ", \n you chose " + player_choice)
+                         text="It's draw, because computer and you chose " + player_choice)
         end_label.pack()
     elif winner == "Player":
         end_label.config(font=("Arial", 15),
                          text="You won, because computer chose " + pc_choice +
-                              ", \n you chose " + player_choice)
+                              ", \n and you chose " + player_choice)
         end_label.pack()
     else:
         end_label.config(font=("Arial", 15),
-                         text="You lost, because computer chose " + pc_choice +
-                              ", \n you chose " + player_choice)
+                         text="You lost, because computer chose" + pc_choice +
+                              ", \n but you chose " + player_choice)
         end_label.pack()
 
     goodbye_label2 = Label(gameWindow,
@@ -82,10 +75,9 @@ def end_game():
     exit_button.place(x=400, y=130)
 
 
-def start_game():
-    global winner
-    global pc_choice
+def start_game(player_choice):
     pc_choice = random.choice(["rock", "scissors", "paper"])
+    winner = None
     if player_choice == pc_choice:
         winner = "Draw"
     elif player_choice == "rock":
@@ -103,8 +95,7 @@ def start_game():
             winner = "Player"
         else:
             winner = "Computer"
-
-    end_game()
+    end_game(winner, player_choice, pc_choice)
 
 
 # --------------------------------------------------
